@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '0.10'
+before_install:
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-pattern-primer' ]; then cd .. && eval "mv $currentfolder generator-pattern-primer" && cd generator-pattern-primer; fi
+
