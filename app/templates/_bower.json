@@ -2,5 +2,9 @@
   "name": "<%= _.slugify(_.humanize(appname)) %>",
   "version": "0.0.0",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {<% if (includeBootstrap) { if (includeSass) { %>
+    "bootstrap-sass": "git://github.com/twbs/bootstrap-sass.git#v3.1.0"<% if (includeModernizr) { %>,<% }} else { %>
+    "bootstrap": "~3.0.3"<% if (includeModernizr) { %>,<% }}} if (includeModernizr) { %>
+    "modernizr": "~2.6.2"<% } %>
+  }
 }
