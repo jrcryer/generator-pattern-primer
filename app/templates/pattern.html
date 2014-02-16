@@ -31,33 +31,22 @@
         <div class="container">
             <div class="header">
                 <ul class="nav nav-pills pull-right">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="/patterns.html">Patterns</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="#">Patterns</a></li>
                 </ul>
                 <h3 class="text-muted"><%= appname %></h3>
             </div>
 
             <div class="jumbotron">
-                <h1>'Allo, 'Allo!</h1>
-                <p class="lead">Always a pleasure scaffolding your apps.</p>
-                <p><a class="btn btn-lg btn-success" href="/patterns.html">Splendid!</a></p>
+                <h1>Patterns</h1>
             </div>
 
             <div class="row marketing">
                 <div class="col-lg-6">
-                    <h4>HTML5 Boilerplate</h4>
-                    <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-
-                    <% if (includeSass) { %><h4>Sass with Compass</h4>
-                    <p>Compass is an open-source CSS Authoring Framework that uses Sass.</p>
-                    <% } %>
-
-                    <h4>Bootstrap</h4>
-                    <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-
-                    <% if (includeModernizr) { %><h4>Modernizr</h4>
-                    <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
-                    <% } %>
+                    <h4>Patterns</h4>
+                    <div class="patterns">
+                        @@patterns
+                    </div>
                 </div>
             </div>
 
@@ -75,6 +64,12 @@
             <% if (includeSass) { %><li>Sass with Compass</li><% } %>
             <% if (includeModernizr) { %><li>Modernizr</li><% } %>
           </ul>
+        </div>
+        <div class="hero-unit">
+          <h1>Patterns</h1>
+          <div class="patterns">
+            @@patterns
+          </div>
         </div>
         <% } %>
 

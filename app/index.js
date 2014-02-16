@@ -132,6 +132,37 @@ AppGenerator.prototype.writeIndex = function writeIndex() {
   });
 };
 
+AppGenerator.prototype.writePatterns = function writePatterns() {
+  this.patternFile = this.readFileAsString(path.join(this.sourceRoot(), 'pattern.html'));
+  this.patternFile = this.engine(this.patternFile, this);
+
+  // wire Twitter Bootstrap plugins
+  if (this.includeBootstrap) {
+    var bs = 'bower_components/bootstrap' + (this.includeSass ? '-sass/vendor/assets/javascripts/bootstrap/' : '/js/');
+    this.patternFile = this.appendScripts(this.patternFile, 'scripts/plugins.js', [
+      bs + 'affix.js',
+      bs + 'alert.js',
+      bs + 'dropdown.js',
+      bs + 'tooltip.js',
+      bs + 'modal.js',
+      bs + 'transition.js',
+      bs + 'button.js',
+      bs + 'popover.js',
+      bs + 'carousel.js',
+      bs + 'scrollspy.js',
+      bs + 'collapse.js',
+      bs + 'tab.js'
+    ]);
+  }
+
+  this.patternFile = this.appendFiles({
+    html: this.patternFile,
+    fileType: 'js',
+    optimizedPath: 'scripts/main.js',
+    sourceFileList: ['scripts/main.js']
+  });
+};
+
 
 AppGenerator.prototype.app = function app() {
   this.mkdir('app');
@@ -140,6 +171,7 @@ AppGenerator.prototype.app = function app() {
   this.mkdir('app/images');
 
   this.write('app/index.html', this.indexFile);
+  this.write('app/_patterns.html', this.patternFile);
   this.directory('patterns', 'app/patterns');
 };
 

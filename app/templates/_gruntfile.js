@@ -1,5 +1,6 @@
 // Generated on 2014-02-16 using generator-pattern-primer 0.0.0
 'use strict';
+var _ = require('lodash');
 
 module.exports = function (grunt) {
 
@@ -36,6 +37,10 @@ module.exports = function (grunt) {
         files: ['<%%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },<% } %>
+      patterns: {
+        files: ['<%%= yeoman.app %>/{,*/}*.html'],
+        tasks: ['replace:dist']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -226,7 +231,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html'],
           dest: '<%%= yeoman.dist %>'
         }]
       }
@@ -244,7 +249,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
+            '!_*.html',
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
             'fonts/*'
@@ -267,15 +272,43 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [<% if (includeSass) { %>
-        'compass:server'<% } else { %>
-        'copy:styles'<% } %>
+        'compass:server',<% } else { %>
+        'copy:styles',<% } %>
+        'replace:dist'
       ],
       dist: [<% if (includeSass) { %>
         'compass:dist',<% } else { %>
         'copy:styles',<% } %>
+        'replace:dist',
         'imagemin',
         'svgmin'
       ]
+    },
+
+    replace: {
+      dist: {
+        options: {
+          patterns: [{
+            match: 'patterns',
+            replacement: function () {
+              var app   = grunt.config.get('yeoman.app');
+              var files = grunt.file.expand(app + '/patterns/*');
+              var frags = _.map(files, function (file) {
+                return grunt.template.process(grunt.file.read(file));
+              });
+              return frags.join('');
+            }
+          }]
+        },
+        files: [{
+          expand: true,
+          src: '<%%= yeoman.app %>/_patterns.html',
+          dest: '<%%= yeoman.app %>',
+          rename: function (dest, src) {
+            return src.replace(/_/, '');
+          }
+        }]
+      }
     }
   });
 

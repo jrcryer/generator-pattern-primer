@@ -11,23 +11,39 @@ describe('pattern-primer generator', function () {
       }
 
       this.app = helpers.createGenerator('pattern-primer:app', [
-        '../../app'
+        '../../app', [
+          helpers.createDummyGenerator(),
+          'mocha:app'
+        ]
       ]);
+      this.app.options['skip-install'] = true;
+
       done();
     }.bind(this));
   });
 
+  it('the generator can be required without throwing', function () {
+    // not testing the actual run of generators yet
+    this.app = require('../app');
+  });
+
   it('creates expected files', function (done) {
     var expected = [
-      // add files you expect to exist here.
-      '.jshintrc',
-      '.editorconfig'
+      'bower.json',
+      'package.json',
+      'Gruntfile.js',
+      'app/404.html',
+      'app/favicon.ico',
+      'app/robots.txt',
+      'app/index.html',
+      'app/_patterns.html',
+      'app/styles/main.scss'
     ];
 
     helpers.mockPrompt(this.app, {
-      'someOption': true
+      features: ['includeSass']
     });
-    this.app.options['skip-install'] = true;
+
     this.app.run({}, function () {
       helpers.assertFile(expected);
       done();
