@@ -101,6 +101,10 @@ AppGenerator.prototype.mainStylesheet = function mainStylesheet() {
   this.copy(css, 'app/styles/' + css);
 };
 
+AppGenerator.prototype.mainJavaScript = function mainJavaScript() {
+  this.write('app/scripts/main.js', '');
+};
+
 AppGenerator.prototype.writeIndex = function writeIndex() {
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
   this.indexFile = this.engine(this.indexFile, this);

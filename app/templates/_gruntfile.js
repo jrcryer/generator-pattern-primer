@@ -98,6 +98,7 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
+            <% if (includeSass) { %>'.sass-cache',<% } %>
             '.tmp',
             '<%%= yeoman.dist %>/*',
             '!<%%= yeoman.dist %>/.git*'
@@ -142,6 +143,8 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
+          cssDir: '<%%= yeoman.dist %>/styles',
+          outputStyle: 'compressed',
           generatedImagesDir: '<%%= yeoman.dist %>/images/generated'
         }
       },
