@@ -30,6 +30,7 @@ describe('pattern-primer generator', function () {
   it('creates expected files', function (done) {
     var expected = [
       '.bowerrc',
+      '.editorconfig',
       'bower.json',
       'package.json',
       'Gruntfile.js',
